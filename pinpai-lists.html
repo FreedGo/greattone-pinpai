@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <?php
+    $bclassid=$GLOBALS[navclassid]; //取得本栏目id
+    ?>
+    [e:loop={"select * from [!db.pre!]enewsclass where classid = '$bclassid' order by classid",0,24,0}]
+    <title><?=$bqr[bname]?>_<?=$public_r['add_sitename']?></title>
+    <meta name="keywords" content="<?=$bqr[classpagekey]?>" />
+    <meta name="description" content="<?=$bqr[intro]?>" />
+    [/e:loop]
+    <base target=_blank>
+    <link rel="stylesheet" type="text/css" href="[!--news.url--]css/xin_base.css">
+    <link rel="stylesheet" type="text/css" href="[!--news.url--]css/loader1.css">
+    <link rel="stylesheet" type="text/css" href="[!--news.url--]css/xin_yinyuejiaoshi.css">
+    <link rel="stylesheet" type="text/css" href="[!--news.url--]css/xin_yueqipinpai.css">
+    <script type="text/javascript" src="[!--news.url--]js/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="[!--news.url--]js/xin_yueqipinpai.js" charset="UTF-8"></script>
+    <script type="text/javascript" src="[!--news.url--]js/area.js"></script>
+    <script language="javascript" src="/js/language.js"></script>
+</head>
+<body>
+<!-- ······························头部结构····································· -->
+[!--temp.tou--]
+<!-- ····························中间结构·································· -->
+<div class="bodyWrap clearfix">
+    <!-- 左边二级导航列···················································· -->
+    <div class="leftWrap">
+        <ul>
+            <li class="mingrenPoint current">
+                <a href="http://www.franzsandner.com/">
+                    <img src="[!--news.url--]images/adLeft.jpg" alt="">
+                </a>
+            </li>
+            <li class="zhixingPoint">
+                <a href="http://www.august-foerster.de/">
+                    <img src="[!--news.url--]images/adLeft2.jpg" alt="">
+                </a>
+            </li>
+            <li class="mingrenPoint current">
+                <a href="https://falanshande.tmall.com/">
+                    <img src="[!--news.url--]images/adLeft3.jpg" alt="">
+                </a>
+            </li>
+            <li class="zhixingPoint">
+                <a href="http://www.oblanc.com.tw/">
+                    <img src="[!--news.url--]images/adLeft4.jpg" alt="">
+                </a>
+            </li>
+
+
+        </ul>
+    </div>
+    <!-- 左边二级导航列结束················································ -->
+
+    <!-- 中间内容部分······················································ -->
+    <div class="rightWrap clearfix">
+        <!-- 第一.全站动态部分············································· -->
+        <div class="rightMiddle qzdtList">
+            <!-- 搜索框························· -->
+            <div class="searchWrap clearfix">
+                <form class="citySelect" method="POST" enctype="multipart/form-data" action="/jiaoshi/indexs.php">
+                    <div class="dizhi">
+                        <div id="sjld" class="clearfix" >
+                            <div class="m_zlxg" id="shenfen">
+                                <p title="">省份</p>
+                                <div class="m_zlxg2 m_zlxg1">
+                                    <ul>
+                                        <li class="aa a1">北京</li>
+                                        <li class="ss s1">上海</li>
+                                        <li class="tt t1">天津</li>
+                                        <li class="bb a8">重庆</li>
+                                        <li class="tt t2">四川</li>
+                                        <li class="aa a4">贵州</li>
+                                        <li class="tt t3">云南</li>
+                                        <li class="tt t4">西藏</li>
+                                        <li class="hh hh1">河南</li>
+                                        <li class="hh h4">湖北</li>
+                                        <li class="hh h3">湖南</li>
+                                        <li class="bb a5">广东</li>
+                                        <li class="bb a6">广西</li>
+                                        <li class="ll s8">陕西</li>
+                                        <li class="bb a7">甘肃</li>
+                                        <li class="ll s5">青海</li>
+                                        <li class="ll s6">宁夏</li>
+                                        <li class="zz t5">新疆</li>
+                                        <li class="hh h2">河北</li>
+                                        <li class="ss s3">山西</li>
+                                        <li class="ss s4">内蒙古</li>
+                                        <li class="ii h5">江苏</li>
+                                        <li class="zz t6">浙江</li>
+                                        <li class="aa a2">安徽</li>
+                                        <li class="aa a3">福建</li>
+                                        <li class="ii h8">江西</li>
+                                        <li class="ss s2">山东</li>
+                                        <li class="ll s7">辽宁</li>
+                                        <li class="ii h7">吉林</li>
+                                        <li class="ii h6">黑龙江</li>
+                                        <li class="jj h9">海南</li>
+                                        <li class="zz t7">台湾</li>
+                                        <li class="zz t8">香港</li>
+                                        <li class="yy t9">澳门</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="m_zlxg" id="chengshi">
+                                <p title="">城市</p>
+                                <div class="m_zlxg2">
+                                    <ul></ul>
+                                </div>
+                            </div>
+                            <div class="m_zlxg" id="quyu">
+                                <p title="">区县</p>
+                                <div class="m_zlxg2">
+                                    <ul></ul>
+                                </div>
+                            </div>
+                            <input id="sfdq_num" type="hidden" value="" />
+                            <input id="csdq_num" type="hidden" value="" />
+                            <input id="sfdq_tj" name="aa1" required type="hidden" value="" />
+                            <input id="csdq_tj" name="aa2" type="hidden" value="" />
+                            <input id="qydq_tj" name="aa3" type="hidden" value="" />
+                        </div>
+                        <script type="text/javascript" src="/js/adress.js"></script>
+                        <script type="text/javascript">
+                            $(function(){
+                                $("#sjld").sjld("#shenfen","#chengshi","#quyu");
+
+                            });
+                        </script>
+                        <div class="tijiao">
+                            <input type="submit" value="查询">
+                        </div>
+                    </div>
+                </form>
+                <div class="search">
+                    <input type="search" class="searchSelect">
+                    <i class="iconfont searchSub">&#xe658;</i>
+                </div>
+                <div class="creat">
+                    <a href="[!--news.url--]/e/member/register/ChangeRegister.php">创建品牌</a>
+                </div>
+            </div>
+            <!-- 搜索框结束····················· -->
+            <!-- 内容··························· -->
+            <div class="qzdtContent">
+                <!-- 第一，音乐名人部分····························· -->
+                <div class="yinyuemingren musical-instruments">
+                    <!-- 分类行····································· -->
+                    <div class="fenlei">
+                        <ul class="clearfix fenleiFuck">
+                            <li class="current"><a href="javascript:;">全部</a><span></span></li>
+                        </ul>
+                    </div>
+                    <!-- 分类行结束································· -->
+                    <!-- 排序行····································· -->
+                    <div class="paixu clearfix">
+                        <span>排序:</span><em>默认</em>
+                        <div class="paixufangfa">
+                            <select name="" id="paixuSelect" >
+                                <option value="0">请选择</option>
+                                <option value="1">关注</option>
+                                <option value="2">认证</option>
+                            </select>
+                        </div>
+                        <div class="tongji">
+								<span>共计:
+                                    <?php
+                                    $count=mysql_query("select count(*) from phome_enewsmember where groupid='4'");
+                                    	while($tmp=mysql_fetch_row($count)){
+                                        print $tmp[0];
+                                        }
+                                ?>
+                                    家</span>
+                        </div>
+                    </div>
+                    <!-- 列表内容区域······························· -->
+                    <div class="liebiao">
+                        <ul class="liebiaoFuck clearfix">
+                            <li>
+                                <a href="/e/space/?userid=<?=$userr[userid]?>">
+                                    <img src="<?=$bqr[userpic]?>">
+                                    <div class="xingming">
+                                        <span><?=$bqr[username]?></span>
+                                        <a href="javascript:;" title="好琴声认证老师"><i class="iconfont">&#xe657;</i></a>';
+                                    </div>
+                                </a>
+                                <div class="shenfen">
+                                    <p>地址：<?=$bqr[address]?></p>
+                                </div>
+                                <div class="guanzhu clearfix">
+                                    <p>咨询电话：<?=$bqr[telephone]?> <?=$bqr[mycall]?></p>
+                                </div>
+                                <span class="toutiao01">认证</span>
+                                <span class="toutiao02"></span>
+                            </li>
+
+                        </ul>
+                        <ul class="liebiaoFuck  liebiaoShow  clearfix">
+                            <!-- 加载动画框························· -->
+                            <div class="loaders" style="display: block">
+                                <div class="loader">
+                                    <div class="loader-inner line-scale">
+                                        <div></div>
+                                        <div></div>
+                                        <div></div>
+                                        <div></div>
+                                        <div></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 加载动画框结束······················ -->
+                        </ul>
+                    </div>
+                    <!-- 列表内容区域结束··························· -->
+                </div>
+                <!-- 音乐名人部分结束······························ -->
+            </div>
+            <!-- 内容··························· -->
+            <!-- 点击图标jq分享··········································· -->
+            <!-- 点击图标jq分享··········································· -->
+            <!-- 瀑布流动态jq加载li········································ -->
+        </div>
+    </div>
+    <!-- 友情链接开始····························· -->
+    <style type="text/css">
+        .friendly-link{
+            width: 1200px;
+            /*margin-top: 10px;*/
+            padding: 15px 0;
+
+        }
+        .friendly-link-head h2{
+            font-size: 16px;
+            line-height: 34px;
+            color: #cb7047;
+            border-top: 2px solid #cb7047;
+            text-indent: 15px;
+        }
+        .friendly-link-content{
+            padding: 0 15px;
+        }
+        .friendly-link-content a{
+            font-size: 14px;
+            margin-right: 5px;
+            color: #333;
+            line-height: 22px;
+        }
+        .friendly-link-content a:hover{
+            color: #cb7047;
+        }
+    </style>
+    <section class="friendly-link" style="float:left">
+        <div class="friendly-link-head">
+            <h2>友情链接：</h2>
+        </div>
+        <div class="friendly-link-content">
+            <a href="http://www.cnscnet.com/" title="申城网" target="_blank">申城网</a>
+            <a href="http://www.huatinet.com/" title="今日话题" target="_blank">今日话题</a>
+        </div>
+    </section>
+    <!-- 友情链接结束····························· -->
+</div>
+<!-- ····························中间结构结束·································· -->
+<?php
+	echo $_POST['aa1'];
+	echo $_POST['aa2'];
+	echo $_POST['aa3'];
+?>
+<!-- 底部结构开始································································ -->
+[!--temp.wei--]
+<!-- 底部结构开始································································ -->
+
+[!--temp.xuanfu--]
+</body>
+</html>

@@ -1,81 +1,80 @@
 <?php
-if (!defined('InEmpireCMS')) {
-    exit();
-}
-//会员信息
-$tmgetuserid = $userid;    //用户ID
-$tmgetusername = RepPostVar($username);    //用户名
-$tmgetgroupid = $groupid;    //用户组ID
-$getuserid = (int)getcvar('mluserid');//当前登陆会员ID
-$getusername = getcvar('mlusername');//当前登陆会员名
-//位置
-$url = "$spacename &gt; 首页";
-include("header.temp.php");
-$registertime = eReturnMemberRegtime($ur['registertime'], "Y-m-d H:i:s");
-//oicq
-if ($addur['oicq']) {
-    $addur['oicq'] = "<a href='http://wpa.qq.com/msgrd?V=1&amp;Uin=" . $addur['oicq'] . "&amp;Site=" . $public_r['sitename'] . "&amp;Menu=yes' target='_blank'><img src='http://wpa.qq.com/pa?p=1:" . $addur['oicq'] . ":4'  border='0' alt='QQ' />" . $addur['oicq'] . "</a>";
-}
-//简介
-$usersay = $addur['saytext'] ? $addur['saytext'] : '暂无简介';
-$usersay = RepFieldtextNbsp(stripSlashes($usersay));
+    if (!defined('InEmpireCMS')) {
+        exit();
+    }
+    //会员信息
+    $tmgetuserid = $userid;    //用户ID
+    $tmgetusername = RepPostVar($username);    //用户名
+    $tmgetgroupid = $groupid;    //用户组ID
+    $getuserid = (int)getcvar('mluserid');//当前登陆会员ID
+    $getusername = getcvar('mlusername');//当前登陆会员名
+    //位置
+    $url = "$spacename &gt; 首页";
+    include("header.temp.php");
+    $registertime = eReturnMemberRegtime($ur['registertime'], "Y-m-d H:i:s");
+    //oicq
+    if ($addur['oicq']) {
+        $addur['oicq'] = "<a href='http://wpa.qq.com/msgrd?V=1&amp;Uin=" . $addur['oicq'] . "&amp;Site=" . $public_r['sitename'] . "&amp;Menu=yes' target='_blank'><img src='http://wpa.qq.com/pa?p=1:" . $addur['oicq'] . ":4'  border='0' alt='QQ' />" . $addur['oicq'] . "</a>";
+    }
+    //简介
+    $usersay = $addur['saytext'] ? $addur['saytext'] : '暂无简介';
+    $usersay = RepFieldtextNbsp(stripSlashes($usersay));
 ?>
 
 <?
-
-//获取我的关注	
-$feeduserid = $empire->fetch1("select feeduserid from {$dbtbpre}enewsmemberadd where userid='$tmgetuserid'");
-$feeduser_result = explode("::::::", $feeduserid['feeduserid']);
-$guanzhu = array();
-if ($feeduser_result && !empty($feeduser_result)) {
-    unset($feeduser_result[count($feeduser_result) - 1]);
-    foreach ($feeduser_result as $key => $val) {
-        $sql = "SELECT feeduserid FROM {$dbtbpre}enewsmemberadd WHERE userid=" . $val;
-        $result = $empire->fetch1($sql);
-        if (!empty($result)) {
-            $friend_userid = explode("::::::", $result['feeduserid']);
-            if (!empty($friend_userid)) {
-                unset($friend_userid[count($friend_userid) - 1]);
+//获取我的关注
+    $feeduserid = $empire->fetch1("select feeduserid from {$dbtbpre}enewsmemberadd where userid='$tmgetuserid'");
+    $feeduser_result = explode("::::::", $feeduserid['feeduserid']);
+    $guanzhu = array();
+    if ($feeduser_result && !empty($feeduser_result)) {
+        unset($feeduser_result[count($feeduser_result) - 1]);
+        foreach ($feeduser_result as $key => $val) {
+            $sql = "SELECT feeduserid FROM {$dbtbpre}enewsmemberadd WHERE userid=" . $val;
+            $result = $empire->fetch1($sql);
+            if (!empty($result)) {
+                $friend_userid = explode("::::::", $result['feeduserid']);
                 if (!empty($friend_userid)) {
-                    foreach ($friend_userid as $k => $v) {
-                        if ($v == $tmgetuserid) {
-                            array_push($guanzhu, $val);
+                    unset($friend_userid[count($friend_userid) - 1]);
+                    if (!empty($friend_userid)) {
+                        foreach ($friend_userid as $k => $v) {
+                            if ($v == $tmgetuserid) {
+                                array_push($guanzhu, $val);
 
+                            }
                         }
                     }
                 }
             }
         }
     }
-}
 
-//获取老师和学生id
-//$userid;//被访问的id
-$dangid = getcvar('mluserid');     //当前id
-$dangidfu = $dangid;
-if (empty($dangid)) {
-    $dangid = 0;
-}
-if ($dangid != 0) {
+    //获取老师和学生id
+    //$userid;//被访问的id
+    $dangid = getcvar('mluserid');     //当前id
+    $dangidfu = $dangid;
+    if (empty($dangid)) {
+        $dangid = 0;
+    }
+    if ($dangid != 0) {
 
-    $kb = $empire->fetch1("select yaoqing from phome_enewsmemberadd where userid=$userid limit 1");
-    $frid = explode("::::::", $kb[yaoqing]);
-    foreach ($frid as $key => $val) {
-        //echo $frid[$key]."<br>";
+        $kb = $empire->fetch1("select yaoqing from phome_enewsmemberadd where userid=$userid limit 1");
+        $frid = explode("::::::", $kb[yaoqing]);
+        foreach ($frid as $key => $val) {
+            //echo $frid[$key]."<br>";
 
-        if ($frid[$key] == $dangidfu) { //该老师或教室邀请过我
-            //查询我是否加入该老师或教室
-            $feeb = $empire->fetch1("select yaoqing from phome_enewsmemberadd where userid=$dangidfu limit 1");
-            $frid_w = explode("::::::", $feeb[yaoqing]);
-            foreach ($frid_w as $key => $val) {
-                if ($frid_w[$key] == $userid) {
-                    $zjj = 11;
+            if ($frid[$key] == $dangidfu) { //该老师或教室邀请过我
+                //查询我是否加入该老师或教室
+                $feeb = $empire->fetch1("select yaoqing from phome_enewsmemberadd where userid=$dangidfu limit 1");
+                $frid_w = explode("::::::", $feeb[yaoqing]);
+                foreach ($frid_w as $key => $val) {
+                    if ($frid_w[$key] == $userid) {
+                        $zjj = 11;
+                    }
                 }
-            }
 
+            }
         }
     }
-}
 ?>
     <script type="text/javascript" src="/js/jquery.SuperSlide.2.1.1.js"></script>
     <script type="text/javascript">
@@ -119,9 +118,9 @@ if ($dangid != 0) {
         });
     </script>
     <div class="bodyWrap clearfix">
-        <link rel="stylesheet" type="text/css" href="/css/xin_yinyueguangchang.css">
         <!-- 左边二级导航列···················································· -->
         <div class="leftWrap jiaoshiRight">
+<!--            右侧的登录之后-->
             <div class="login_Hou">
                 <a href="<?= $public_r['newsurl'] ?>e/space/?userid=<?= $userid ?>">
                     <div class="touxiang"><img src="<?= $userpic ?>"></div>

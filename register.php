@@ -37,6 +37,8 @@ require(ECMS_PATH.'e/template/incfile/header_1.php');
 			echo "机构名称";
 		}elseif($groupid==1){
 			echo "用户名：";
+		}elseif($groupid==5){
+			echo "品牌名：";
 		}else{
 			echo "真实姓名：";
 		}

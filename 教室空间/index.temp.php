@@ -77,28 +77,44 @@ if ($dangid != 0) {
     }
 }
 ?>
-    <script>
-//        控制点击头像弹出四张图片的一系列事件
+    <script type="text/javascript" src="/js/jquery.SuperSlide.2.1.1.js"></script>
+    <script type="text/javascript">
         $(function () {
+            // 教室多图展示
+            jQuery(".focusBox").hover(function () {
+                jQuery(this).find(".prev,.next").stop(true, true).fadeTo("show", 0.2)
+            }, function () {
+                jQuery(this).find(".prev,.next").fadeOut()
+            });
+            /*SuperSlide图片切换*/
+            jQuery(".focusBox").slide({
+                mainCell: ".pic",
+                effect: "fold",
+                autoPlay: false,
+                delayTime: 600,
+                trigger: "click"
+            });
+//                隐藏图片
             $('.jiaoshi_shows_down').hide();
             $('.focusBox').hide();
-
+//                控制相册显示与隐藏
             $('.jiaoshiImg').on('click', function (event) {
                 // event.preventDefault();
-                $('.jiaoshi_shows_down').fadeIn(100);
-                $('.focusBox').fadeIn(100);
+                $('.jiaoshi_shows_down').show().css('opacity',1);
+                $('.focusBox').show().css('opacity',1);
             });
             $('.shutUp').click(function (event) {
-                $('.jiaoshi_shows_down').fadeOut(100);
-                $('.focusBox').fadeOut(100);
+                $('.jiaoshi_shows_down').hide().css('opacity',0);
+                $('.focusBox').hide().css('opacity',0);
             });
             $('.jiaoshi_shows_down').click(function (event) {
                 $('.focusBox').click(function (event) {
                     return false;
                 });
-                $(this).fadeOut();
-                $('.focusBox').fadeOut(100);
+                $(this).hide().css('opacity',0);
+                $('.focusBox').hide().css('opacity',0);
             });
+
 
         });
     </script>
@@ -1550,28 +1566,7 @@ if ($dangid != 0) {
             </ul>
         </div>
 
-        <script type="text/javascript" src="/js/jquery.SuperSlide.2.1.1.js"></script>
-        <script type="text/javascript">
-            $(function () {
-                // 教室多图展示
-                jQuery(".focusBox").hover(function () {
-                    jQuery(this).find(".prev,.next").stop(true, true).fadeTo("show", 0.2)
-                }, function () {
-                    jQuery(this).find(".prev,.next").fadeOut()
-                });
-                /*SuperSlide图片切换*/
-                jQuery(".focusBox").slide({
-                    mainCell: ".pic",
-                    effect: "fold",
-                    autoPlay: false,
-                    delayTime: 600,
-                    trigger: "click"
-                });
-            });
 
-
-
-        </script>
         <!-- 教室图片展示··················································································· -->
     </div>
 <?php

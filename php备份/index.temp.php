@@ -77,44 +77,28 @@ if ($dangid != 0) {
     }
 }
 ?>
-    <script type="text/javascript" src="/js/jquery.SuperSlide.2.1.1.js"></script>
-    <script type="text/javascript">
+    <script>
+//        控制点击头像弹出四张图片的一系列事件
         $(function () {
-            // 教室多图展示
-            jQuery(".focusBox").hover(function () {
-                jQuery(this).find(".prev,.next").stop(true, true).fadeTo("show", 0.2)
-            }, function () {
-                jQuery(this).find(".prev,.next").fadeOut()
-            });
-            /*SuperSlide图片切换*/
-            jQuery(".focusBox").slide({
-                mainCell: ".pic",
-                effect: "fold",
-                autoPlay: false,
-                delayTime: 600,
-                trigger: "click"
-            });
-//                隐藏图片
             $('.jiaoshi_shows_down').hide();
             $('.focusBox').hide();
-//                控制相册显示与隐藏
+
             $('.jiaoshiImg').on('click', function (event) {
                 // event.preventDefault();
-                $('.jiaoshi_shows_down').show().css('opacity',1);
-                $('.focusBox').show().css('opacity',1);
+                $('.jiaoshi_shows_down').fadeIn(100);
+                $('.focusBox').fadeIn(100);
             });
             $('.shutUp').click(function (event) {
-                $('.jiaoshi_shows_down').hide().css('opacity',0);
-                $('.focusBox').hide().css('opacity',0);
+                $('.jiaoshi_shows_down').fadeOut(100);
+                $('.focusBox').fadeOut(100);
             });
             $('.jiaoshi_shows_down').click(function (event) {
                 $('.focusBox').click(function (event) {
                     return false;
                 });
-                $(this).hide().css('opacity',0);
-                $('.focusBox').hide().css('opacity',0);
+                $(this).fadeOut();
+                $('.focusBox').fadeOut(100);
             });
-
 
         });
     </script>
@@ -354,7 +338,7 @@ if ($dangid != 0) {
                                 <?php
                                 if ($zjj == 11) {
                                     ?>
-                                    <li class="discuss-area-btn"><a href="javascript:;">讨论区</a><span></span></li>
+                                    <li><a href="javascript:;">讨论区</a><span></span></li>
                                     <?
                                 } ?>
 
@@ -1005,11 +989,6 @@ if ($dangid != 0) {
                             if ($zjj == 11) {
                                 ?>
                                 <ul class="liebiaoFuck liebiaoShow discuss-area clearfix">
-                                    <script>
-                                        var currentUserid = "<?=$tmgetuserid?>";
-                                            currentUserid = parseInt(currentUserid);//转为number类型
-                                    </script>
-                                    <script type="text/javascript" src="/js/space-dis-area-ajax.js"></script>
                                     <!-- 第一.全站动态部分············································· -->
                                     <div class="rightMiddle qzdtList">
                                         <!-- 搜索框························· -->
@@ -1040,21 +1019,476 @@ if ($dangid != 0) {
                                         <!-- 内容··························· -->
 
                                         <div class="qzdtContent">
+                                            <ul class="quanzhandongtai">
 
-                                            <ul class="quanzhandontai dis-area-content"></ul>
-                                            <!-- 加载动画框························· -->
-                                            <div class="loaders" style="display: block">
-                                                <div class="loader">
-                                                    <div class="loader-inner line-scale">
-                                                        <div></div>
-                                                        <div></div>
-                                                        <div></div>
-                                                        <div></div>
-                                                        <div></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- 加载动画框结束······················ -->
+
+                                                <?php
+                                                //相互邀请
+                                                $yaoqing = $empire->fetch1("select yaoqing from {$dbtbpre}enewsmemberadd where userid='$tmgetuserid'");
+                                                $feeduser_result = explode("::::::", $yaoqing['yaoqing']);
+                                                $guanzhu = array();
+                                                if ($feeduser_result && !empty($feeduser_result)) {
+                                                    unset($feeduser_result[count($feeduser_result) - 1]);
+                                                    foreach ($feeduser_result as $key => $val) {
+                                                        $sql = "SELECT yaoqing FROM {$dbtbpre}enewsmemberadd WHERE userid=" . $val;
+                                                        $result = $empire->fetch1($sql);
+                                                        if (!empty($result)) {
+                                                            $friend_userid = explode("::::::", $result['yaoqing']);
+                                                            if (!empty($friend_userid)) {
+                                                                unset($friend_userid[count($friend_userid) - 1]);
+                                                                if (!empty($friend_userid)) {
+                                                                    foreach ($friend_userid as $k => $v) {
+                                                                        if ($v == $tmgetuserid) {
+                                                                            array_push($guanzhu, $val);
+                                                                            /*print_r($guanzhu);*/
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+
+                                                $whe = join(",", $guanzhu); //内部的老师
+                                                if (empty($whe)) {
+                                                    $whe = 0;
+                                                }
+                                                $friend_sql = "select * from {$dbtbpre}ecms_photo a left join {$dbtbpre}enewsmemberadd b on a.userid=b.userid left join {$dbtbpre}enewsmember c on a.userid=c.userid  WHERE c.userid IN ($whe) and classid in(11,12,13) order by a.id desc";
+                                                $list = $empire->query($friend_sql);
+                                                while ($r = $empire->fetch($list)) {
+                                                    ?>
+
+
+                                                    <?
+                                                    if ($r[classid] == 11 && $r[open] == 1) {
+                                                        ?>
+                                                        <!--------视频开始-------->
+                                                        <li class="clearfix dongtaiLi">
+                                                            <?= $userinfo ?>
+                                                            <!-- list左侧，包含头像姓名······················ -->
+                                                            <div class="listLeft">
+                                                                <a href="/e/space/?userid=<?= $r[userid] ?>">
+                                                                    <img src="<?= $r[userpic] ?>">
+                                                                    <h3><?= $r[username] ?>&nbsp;
+                                                                        <?
+                                                                        if ($r[cked] == 1) {
+                                                                            echo "<i class='iconfont'>&#xe657;</i>";
+                                                                        }
+                                                                        ?>
+                                                                    </h3>
+                                                                    <p class="fromCity"><?= $r[address] ?></p>
+                                                                    <p><em>
+                                                                            <?
+                                                                            if ($r[groupid] == 1) {
+                                                                                echo $r[putong_shenfen];//普通会员默认爱乐人
+                                                                            } elseif ($r[groupid] == 2) {
+                                                                                echo $r[music_star];//音乐之星
+                                                                            } elseif ($r[groupid] == 3) {
+                                                                                echo $r[teacher_type];//音乐老师
+                                                                            } elseif ($r[groupid] == 4) {
+                                                                                echo "音乐教室";
+                                                                            }
+                                                                            ?>
+                                                                        </em>
+                                                                        <span>
+            <?php
+            if ($userfen <= 100) {
+                echo "一级";
+            } elseif ($userfen <= 300) {
+                echo "二级";
+            } elseif ($userfen <= 800) {
+                echo "三级";
+            } elseif ($userfen <= 2000) {
+                echo "四级";
+            } elseif ($userfen <= 5000) {
+                echo "五级";
+            } elseif ($userfen <= 15000) {
+                echo "六级";
+            } elseif ($userfen <= 50000) {
+                echo "七级";
+            } elseif ($userfen <= 100000) {
+                echo "八级";
+            } else {
+                echo "八级";
+            }
+            ?>
+            
+        </span></p>
+                                                                </a>
+                                                            </div>
+                                                            <!-- list右侧，内容区域·························· -->
+                                                            <div class="listRight">
+                                                                <a href="<?= $r['titleurl'] ?>">
+                                                                    <h3><?= esub($r[title], 30) ?></h3></a>
+                                                                <p><?= esub($r[smalltext], 100) ?></p>
+                                                                <div class="chatu">
+                                                                    <a href="<?= $r['titleurl'] ?>">
+                                                                        <img src="<?= $r[titlepic] ?>">
+                                                                        <i class="iconfont">&#xe63b;</i>
+                                                                    </a>
+                                                                </div>
+                                                                <div class="time clearfix">
+                                                                    <span><?= date('Y-m-d', $r[newstime]) ?></span>
+                                                                    <div class="timeRight">
+                                                                        <ol class="clearfix">
+                                                                            <li><a title="点击量" href="javascript:;"
+                                                                                   target="_self"><i class="iconfont">
+                                                                                        &#xe644;</i></a></li>
+                                                                            <li>
+                                                                                <script
+                                                                                    src=/e/public/ViewClick/?classid=<?= $r['classid'] ?>&id=<?= $r['id'] ?>></script>
+                                                                            </li>
+                                                                            <li><a title="点赞量"
+                                                                                   href="JavaScript:makeRequest('/e/public/digg/?classid=<?= $r['classid'] ?>&id=<?= $r['id'] ?>&dotop=1&doajax=1&ajaxarea=diggnum','EchoReturnedText','GET','');"><i
+                                                                                        class="iconfont">
+                                                                                        &#xe629;</i></a></li>
+                                                                            <li>
+                                                                                <script
+                                                                                    src=/e/public/ViewClick/?classid=<?= $r['classid'] ?>&id=<?= $r['id'] ?>&down=5></script>
+                                                                            </li>
+                                                                            <li><a title="评论量" href="javascript:;"
+                                                                                   target="_self"><i class="iconfont">
+                                                                                        &#xe64e;</i></a></li>
+                                                                            <li>
+                                                                                <script
+                                                                                    src=/e/public/ViewClick/?classid=<?= $r['classid'] ?>&id=<?= $r['id'] ?>&down=2></script>
+                                                                            </li>
+                                                                            <li class="bigsize"><a title="转载量"
+                                                                                                   href="javascript:;"
+                                                                                                   target="_self"><i
+                                                                                        class="iconfont">
+                                                                                        &#xe623;</i></a></li>
+                                                                            <li>34</li>
+                                                                            <li class="bigsize"><a title="加入收藏"
+                                                                                                   href="/e/member/fava/add/?classid=<?= $r['classid'] ?>&amp;id=<?= $r['id'] ?>"><i
+                                                                                        class="iconfont">
+                                                                                        &#xe647;</i></a></li>
+                                                                            <li></li>
+                                                                            <li><a title="点击分享" href="javascript:;"
+                                                                                   target="_self"><i class="iconfont">
+                                                                                        &#xe64b;</i></a></li>
+                                                                        </ol>
+                                                                        <div class="bdsharebuttonbox">
+                                                                            <a href="#" class="bds_more"
+                                                                               data-cmd="more"></a><a href="#"
+                                                                                                      class="bds_qzone"
+                                                                                                      data-cmd="qzone"
+                                                                                                      title="分享到QQ空间"></a><a
+                                                                                href="#" class="bds_tsina"
+                                                                                data-cmd="tsina" title="分享到新浪微博"></a><a
+                                                                                href="#" class="bds_tqq" data-cmd="tqq"
+                                                                                title="分享到腾讯微博"></a><a href="#"
+                                                                                                       class="bds_fbook"
+                                                                                                       data-cmd="fbook"
+                                                                                                       title="分享到Facebook"></a><a
+                                                                                href="#" class="bds_weixin"
+                                                                                data-cmd="weixin" title="分享到微信"></a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- list右侧，内容区域结束······················ -->
+                                                        </li>
+                                                        <!--------视频结束-------->
+                                                        <?
+                                                    } elseif ($r[classid] == 12 && $r[open] == 1) {
+                                                        ?>
+                                                        <!--------图片开始-------->
+                                                        <li class="clearfix" id="userImg<?= $r[id] ?>">
+                                                            <?= $userinfo ?>
+                                                            <!-- list左侧，包含头像姓名······················ -->
+                                                            <div class="listLeft">
+                                                                <a href="/e/space/?userid=<?= $r[userid] ?>">
+                                                                    <img src="<?= $r[userpic] ?>">
+                                                                    <input type="hidden" name="titid" class="tit_id"
+                                                                           value="<?= $r[id] ?>"/>
+                                                                    <h3><?= $r[username] ?>&nbsp;
+                                                                        <?
+                                                                        if ($r[cked] == 1) {
+                                                                            echo "<i class='iconfont'>&#xe657;</i>";
+                                                                        }
+                                                                        ?>
+                                                                    </h3>
+                                                                    <p class="fromCity"><?= $r[address] ?></p>
+                                                                    <p><em>
+                                                                            <?
+                                                                            if ($r[groupid] == 1) {
+                                                                                echo $r[putong_shenfen];//普通会员默认爱乐人
+                                                                            } elseif ($r[groupid] == 2) {
+                                                                                echo $r[music_star];//音乐之星
+                                                                            } elseif ($r[groupid] == 3) {
+                                                                                echo $r[teacher_type];//音乐老师
+                                                                            } elseif ($r[groupid] == 4) {
+                                                                                echo "音乐教室";
+                                                                            }
+                                                                            ?>
+                                                                        </em>
+                                                                        <span>
+            <?php
+            if ($userfen <= 100) {
+                echo "一级";
+            } elseif ($userfen <= 300) {
+                echo "二级";
+            } elseif ($userfen <= 800) {
+                echo "三级";
+            } elseif ($userfen <= 2000) {
+                echo "四级";
+            } elseif ($userfen <= 5000) {
+                echo "五级";
+            } elseif ($userfen <= 15000) {
+                echo "六级";
+            } elseif ($userfen <= 50000) {
+                echo "七级";
+            } elseif ($userfen <= 100000) {
+                echo "八级";
+            } else {
+                echo "八级";
+            }
+            ?>
+            
+        </span></p>
+                                                                </a>
+                                                            </div>
+                                                            <!-- list右侧，内容区域·························· -->
+                                                            <div class="listRight">
+                                                                <script type="text/javascript">
+                                                                    $(function () {
+                                                                        var imgUserMsg = "<?=$r[id]?>";
+
+                                                                        $.ajax({
+                                                                            url: '/guangchang/index.photo.php',
+                                                                            type: 'post',
+                                                                            dataType: 'text',
+                                                                            data: {'tit_id': imgUserMsg},
+                                                                        })
+                                                                            .done(function (msg) {
+
+                                                                                var UserImgInfo = msg;
+                                                                                var userSelect = "userImg" + imgUserMsg;
+
+                                                                                // $('userSelect').children('chatu a').append('msg');
+                                                                                $('#' + userSelect).find('.chatu a').append(msg);
+                                                                            })
+                                                                            .fail(function () {
+                                                                                console.log("error");
+                                                                            });
+
+
+                                                                    });
+
+                                                                </script>
+                                                                <a href="<?= $r['titleurl'] ?>">
+                                                                    <h3><?= esub($r[title], 30) ?></h3></a>
+                                                                <p><?= esub($r[smalltext], 100) ?></p>
+                                                                <div class="chatu">
+                                                                    <a href="<?= $r['titleurl'] ?>">
+
+                                                                        <!--<img src="<?= $r[titlepic] ?>">-->
+                                                                    </a>
+                                                                </div>
+                                                                <div class="time clearfix">
+                                                                    <span><?= date('Y-m-d', $r[newstime]) ?></span>
+                                                                    <div class="timeRight">
+                                                                        <ol class="clearfix">
+                                                                            <li><a title="点击量" href="javascript:;"
+                                                                                   target="_self"><i class="iconfont">
+                                                                                        &#xe644;</i></a></li>
+                                                                            <li>
+                                                                                <script
+                                                                                    src=/e/public/ViewClick/?classid=<?= $r['classid'] ?>&id=<?= $r['id'] ?>></script>
+                                                                            </li>
+                                                                            <li><a title="点赞量"
+                                                                                   href="JavaScript:makeRequest('/e/public/digg/?classid=<?= $r['classid'] ?>&id=<?= $r['id'] ?>&dotop=1&doajax=1&ajaxarea=diggnum','EchoReturnedText','GET','');"><i
+                                                                                        class="iconfont">
+                                                                                        &#xe629;</i></a></li>
+                                                                            <li>
+                                                                                <script
+                                                                                    src=/e/public/ViewClick/?classid=<?= $r['classid'] ?>&id=<?= $r['id'] ?>&down=5></script>
+                                                                            </li>
+                                                                            <li><a title="评论量" href="javascript:;"
+                                                                                   target="_self"><i class="iconfont">
+                                                                                        &#xe64e;</i></a></li>
+                                                                            <li>
+                                                                                <script
+                                                                                    src=/e/public/ViewClick/?classid=<?= $r['classid'] ?>&id=<?= $r['id'] ?>&down=2></script>
+                                                                            </li>
+                                                                            <li class="bigsize"><a title="转载量"
+                                                                                                   href="javascript:;"
+                                                                                                   target="_self"><i
+                                                                                        class="iconfont">
+                                                                                        &#xe623;</i></a></li>
+                                                                            <li>34</li>
+                                                                            <li class="bigsize"><a title="加入收藏"
+                                                                                                   href="/e/member/fava/add/?classid=<?= $r['classid'] ?>&amp;id=<?= $r['id'] ?>"><i
+                                                                                        class="iconfont">
+                                                                                        &#xe647;</i></a></li>
+                                                                            <li></li>
+                                                                            <li><a title="点击分享" href="javascript:;"
+                                                                                   target="_self"><i class="iconfont">
+                                                                                        &#xe64b;</i></a></li>
+                                                                        </ol>
+                                                                        <div class="bdsharebuttonbox">
+                                                                            <a href="#" class="bds_more"
+                                                                               data-cmd="more"></a><a href="#"
+                                                                                                      class="bds_qzone"
+                                                                                                      data-cmd="qzone"
+                                                                                                      title="分享到QQ空间"></a><a
+                                                                                href="#" class="bds_tsina"
+                                                                                data-cmd="tsina" title="分享到新浪微博"></a><a
+                                                                                href="#" class="bds_tqq" data-cmd="tqq"
+                                                                                title="分享到腾讯微博"></a><a href="#"
+                                                                                                       class="bds_fbook"
+                                                                                                       data-cmd="fbook"
+                                                                                                       title="分享到Facebook"></a><a
+                                                                                href="#" class="bds_weixin"
+                                                                                data-cmd="weixin" title="分享到微信"></a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- list右侧，内容区域结束······················ -->
+                                                        </li>
+                                                        <!--------图片结束-------->
+                                                        <?
+                                                    } elseif ($r[classid] == 13 && $r[open] == 1) {
+                                                        ?>
+                                                        <!--------音乐开始-------->
+                                                        <li class="clearfix">
+                                                            <?= $userinfo ?>
+                                                            <!-- list左侧，包含头像姓名······················ -->
+                                                            <div class="listLeft">
+                                                                <a href="/e/space/?userid=<?= $r[userid] ?>">
+                                                                    <img src="<?= $r[userpic] ?>">
+                                                                    <h3><?= $r[username] ?>&nbsp;
+                                                                        <?
+                                                                        if ($r[cked] == 1) {
+                                                                            echo "<i class='iconfont'>&#xe657;</i>";
+                                                                        }
+                                                                        ?>
+                                                                    </h3>
+                                                                    <p class="fromCity"><?= $r[address] ?></p>
+                                                                    <p><em>
+                                                                            <?
+                                                                            if ($r[groupid] == 1) {
+                                                                                echo $r[putong_shenfen];//普通会员默认爱乐人
+                                                                            } elseif ($r[groupid] == 2) {
+                                                                                echo $r[music_star];//音乐之星
+                                                                            } elseif ($r[groupid] == 3) {
+                                                                                echo $r[teacher_type];//音乐老师
+                                                                            } elseif ($r[groupid] == 4) {
+                                                                                echo "音乐教室";
+                                                                            }
+                                                                            ?>
+                                                                        </em>
+                                                                        <span>
+            <?php
+            if ($userfen <= 100) {
+                echo "一级";
+            } elseif ($userfen <= 300) {
+                echo "二级";
+            } elseif ($userfen <= 800) {
+                echo "三级";
+            } elseif ($userfen <= 2000) {
+                echo "四级";
+            } elseif ($userfen <= 5000) {
+                echo "五级";
+            } elseif ($userfen <= 15000) {
+                echo "六级";
+            } elseif ($userfen <= 50000) {
+                echo "七级";
+            } elseif ($userfen <= 100000) {
+                echo "八级";
+            } else {
+                echo "八级";
+            }
+            ?>
+            
+        </span></p>
+                                                                </a>
+                                                            </div>
+                                                            <!-- list右侧，内容区域·························· -->
+                                                            <div class="listRight">
+                                                                <a href="<?= $r['titleurl'] ?>">
+                                                                    <h3><?= esub($r[title], 30) ?></h3></a>
+                                                                <p><?= esub($r[smalltext], 100) ?></p>
+                                                                <div class="chatu">
+                                                                    <a href="<?= $r['titleurl'] ?>">
+
+
+                                                                        <img src="<?= $r[titlepic] ?>">
+                                                                        <i class="iconfont">&#xe63e;</i>
+                                                                    </a>
+                                                                </div>
+                                                                <div class="time clearfix">
+                                                                    <span><?= date('Y-m-d', $r[newstime]) ?></span>
+                                                                    <div class="timeRight">
+                                                                        <ol class="clearfix">
+                                                                            <li><a title="点击量" href="javascript:;"
+                                                                                   target="_self"><i class="iconfont">
+                                                                                        &#xe644;</i></a></li>
+                                                                            <li>
+                                                                                <script
+                                                                                    src=/e/public/ViewClick/?classid=<?= $r['classid'] ?>&id=<?= $r['id'] ?>></script>
+                                                                            </li>
+                                                                            <li><a title="点赞量"
+                                                                                   href="JavaScript:makeRequest('/e/public/digg/?classid=<?= $r['classid'] ?>&id=<?= $r['id'] ?>&dotop=1&doajax=1&ajaxarea=diggnum','EchoReturnedText','GET','');"><i
+                                                                                        class="iconfont">
+                                                                                        &#xe629;</i></a></li>
+                                                                            <li>
+                                                                                <script
+                                                                                    src=/e/public/ViewClick/?classid=<?= $r['classid'] ?>&id=<?= $r['id'] ?>&down=5></script>
+                                                                            </li>
+                                                                            <li><a title="评论量" href="javascript:;"
+                                                                                   target="_self"><i class="iconfont">
+                                                                                        &#xe64e;</i></a></li>
+                                                                            <li>
+                                                                                <script
+                                                                                    src=/e/public/ViewClick/?classid=<?= $r['classid'] ?>&id=<?= $r['id'] ?>&down=2></script>
+                                                                            </li>
+                                                                            <li class="bigsize"><a title="转载量"
+                                                                                                   href="javascript:;"
+                                                                                                   target="_self"><i
+                                                                                        class="iconfont">
+                                                                                        &#xe623;</i></a></li>
+                                                                            <li>34</li>
+                                                                            <li class="bigsize"><a title="加入收藏"
+                                                                                                   href="/e/member/fava/add/?classid=<?= $r['classid'] ?>&amp;id=<?= $r['id'] ?>"><i
+                                                                                        class="iconfont">
+                                                                                        &#xe647;</i></a></li>
+                                                                            <li></li>
+                                                                            <li><a title="点击分享" href="javascript:;"
+                                                                                   target="_self"><i class="iconfont">
+                                                                                        &#xe64b;</i></a></li>
+                                                                        </ol>
+                                                                        <div class="bdsharebuttonbox">
+                                                                            <a href="#" class="bds_more"
+                                                                               data-cmd="more"></a><a href="#"
+                                                                                                      class="bds_qzone"
+                                                                                                      data-cmd="qzone"
+                                                                                                      title="分享到QQ空间"></a><a
+                                                                                href="#" class="bds_tsina"
+                                                                                data-cmd="tsina" title="分享到新浪微博"></a><a
+                                                                                href="#" class="bds_tqq" data-cmd="tqq"
+                                                                                title="分享到腾讯微博"></a><a href="#"
+                                                                                                       class="bds_fbook"
+                                                                                                       data-cmd="fbook"
+                                                                                                       title="分享到Facebook"></a><a
+                                                                                href="#" class="bds_weixin"
+                                                                                data-cmd="weixin" title="分享到微信"></a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- list右侧，内容区域结束······················ -->
+                                                        </li>
+                                                        <!--------音乐结束-------->
+                                                        <?
+                                                    }
+                                                }
+                                                ?>
+
+
+                                            </ul>
                                         </div>
 
 
@@ -1116,7 +1550,28 @@ if ($dangid != 0) {
             </ul>
         </div>
 
+        <script type="text/javascript" src="/js/jquery.SuperSlide.2.1.1.js"></script>
+        <script type="text/javascript">
+            $(function () {
+                // 教室多图展示
+                jQuery(".focusBox").hover(function () {
+                    jQuery(this).find(".prev,.next").stop(true, true).fadeTo("show", 0.2)
+                }, function () {
+                    jQuery(this).find(".prev,.next").fadeOut()
+                });
+                /*SuperSlide图片切换*/
+                jQuery(".focusBox").slide({
+                    mainCell: ".pic",
+                    effect: "fold",
+                    autoPlay: false,
+                    delayTime: 600,
+                    trigger: "click"
+                });
+            });
 
+
+
+        </script>
         <!-- 教室图片展示··················································································· -->
     </div>
 <?php

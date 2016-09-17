@@ -20,7 +20,7 @@ function ajaxDisArea(userid) {
         type:'post',
         data:{'$tmgetuserid':userid}
     })
-    .done(function(msg){
+    .done(function (msg) {
         console.log(msg);
         doneData = msg ;
     })
@@ -41,7 +41,11 @@ $(function () {
     })
 })
 
+$(function () {
+    $.ajax({
 
+    })
+})
 
 
 

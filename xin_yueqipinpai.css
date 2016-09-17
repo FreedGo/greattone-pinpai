@@ -3,3 +3,367 @@
  * flyxz@126.com
  * 乐器品牌是由音乐老师模板修改而来，故主体css继承音乐老师的，此处为乐器品牌自有的样式
  */
+/*空间主页*/
+.bodyWrap{width: 1200px;margin:0 auto;}
+/*分类行样式··········································*/
+.fenlei{
+    height: 50px;
+    border-bottom: #ccc solid 1px;
+    margin-bottom: 30px;
+    border-top: #ce6d40 solid 1px;
+    background: url(/images/normal_icon2.png) 0 -218px no-repeat;
+}
+.borTop{
+    background: url(/images/normal_icon2.png) 0 -276px no-repeat;
+}
+.fenlei>ul{
+    height: 50px;
+
+}
+.fenlei >ul>li{
+    float: left;
+    position: relative;
+    height: 50px;
+    width: 141px;
+
+
+}
+.fenlei.teacher-space>ul>li{
+    float: left;
+    position: relative;
+    height: 50px;
+    width: 100px;
+}
+.fenlei >ul>li.current{
+    background: url(/images/normal_icon2.png) -300px -104px no-repeat;
+}
+.fenlei >ul>li.current>span{
+    display: none;
+}
+.fenlei >ul>li.current>a{
+    color: #000;
+}
+
+.fenlei >ul>li:hover>span{
+    display: none;
+}
+.fenlei >ul>li:hover>a{
+    color: #000;
+}
+.fenlei >ul>li>a{
+    display: inline-block;
+    height: 30px;
+    margin-top: 10px;
+    line-height: 30px;
+    font-size: 16px;
+    color: #000;
+    padding: 0 30px;
+    width:81px;
+    text-align: center;
+
+}
+.fenlei.teacher-space>ul>li>a{
+    display: inline-block;
+    height: 30px;
+    margin-top: 10px;
+    line-height: 30px;
+    font-size: 16px;
+    color: #000;
+    padding: 0 15px;
+    width:70px;
+    text-align: center;
+
+}
+.jieshao>p>span{
+    background-color: #fef9e9!important;
+}
+.fenlei >ul>li>span{
+    height: 0;
+    width: 0;
+    padding-top: 0;
+    border: 10px  transparent solid;
+    border-top: 10px #ce6d40 solid;
+    position: absolute;
+    top:50px;
+    left: 62px;
+    display: none;
+    transition: all 0.5s ease 0s;
+    -webkit-transition: all 0.5s ease 0s;
+    -mos-transition: all 0.5s ease 0s;
+    -ms-transition: all 0.5s ease 0s;
+}
+.rightWrap.jiaoshiLeft{float: left;}
+
+.leftWrap.jiaoshiRight{float: right;}
+
+.login_Hou{
+    padding: 20px 26px;
+    background-color: #f7f7f7;
+
+    margin-bottom: 10px;
+    /*margin-top: 50px;*/
+
+}
+.login_Hou .touxiang{
+    height: 102px;
+    width: 102px;
+    margin: 0 auto 12px;
+}
+.touxiang img{
+    height: 102px;
+    width: 102px;
+}
+.uesrID{
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: #474646;
+    line-height: 20px;
+}
+.shenfen1,.dengji{
+    padding-left: 20px;
+    height: 30px;
+    line-height: 30px;
+}
+.shenfen1>span,.dengji>span{
+    color: #ce6d40;
+}
+.loginOut{
+    text-align: center;
+    padding-top: 10px;
+}
+.loginOut>a{
+    font-size: 16px;
+}
+
+.guanzhu {
+    height: 30px;
+    line-height: 30px;
+}
+.inguanzhu,.fensi{
+    float: left;
+    width: 69px;
+    font-size: 14px;
+
+
+}
+.fensi{
+    width: 69px;
+    padding-left: 5px;
+
+}
+.inguanzhu>span,.fensi>span{
+    font-size: 14px;
+    color: #333;
+    padding-left: 5px;
+}
+.inguanzhu{
+    border-right: #ccc solid 1px;
+}
+.inMsg .jiaoshiming>a{margin-right: 10px;font-size: 16px;overflow: hidden;vertical-align: middle;float: left;color: #333}
+.jiaoshiming>img{float: left;}
+.tadekongjian{
+    font-size: 14px;
+    color: #333;
+    font-weight: bold;
+}
+.jiaoshiming i{color: red;overflow: hidden;display: inline-block;}
+.jiaoshiLeft .inMsg li span,.jiaoshiLeft .inMsg li>i{text-align: left;
+    width: auto;
+    display: inline-block;
+    margin-right: 10px;
+    overflow: hidden;}
+.jiaoshiLeft .inMsg li>i{
+    max-width: 310px;
+    -ms-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+#mapDizhi{
+    width: 282px;
+    display: inline-block;
+    overflow: hidden;
+    -ms-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.star{
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    background: url(../images/star1.png) 0 0 no-repeat;}
+
+.jiaoshiLeft .inMsg>ul>li{
+    height: 34px;
+    line-height: 34px;
+}
+.biaoti>span{
+    width: 290px;
+    overflow: hidden;
+    -ms-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-weight: bold;
+    font-size: 16px;
+}
+.liebiao>.jiaoshiVideo>li{
+    width: 237px;
+    margin-right: 10px;
+    height: auto;
+}
+.liebiao>.jiaoshiVideo>li img{
+    width: 237px;
+    height: 180px;
+}
+.jiaoshiVideo .xingming{font-size: 14px;}
+.jiaoshiVideo .xingming i{padding: 0;width: 24px;font-size: 28px;}
+.jiaoshiVideo>li>a>i{
+    left: 78px;
+    top: 55px;
+}
+.jiaoshiVideo .biaoti>span{
+    width: 220px;
+}
+.xingming del{
+    color: #333;
+    height: 28px;
+    overflow: hidden;
+    zoom: 1;
+    line-height: 28px;
+    display: inline-block;
+    font-size: 12px;
+    margin-left: 20px;
+    display: none;
+}
+.hongse{ color:#EC791D!important;
+    font-size: 14px;
+}
+.xingming>a>span{
+    vertical-align: middle;
+    font-size: 14px;
+    margin-left: 5px;
+}
+.noname1{
+    font-size: 16px;
+}
+
+.liebiao .notice li{
+    float: none;
+    height: 30px;
+    width: 940px;
+    border-bottom: #ccc dotted 1px;
+    line-height: 30px;
+    padding: 5px 20px;
+    margin: 0;
+}
+.notice{
+    min-height:200px;}
+.liebiao .notice li>a{
+    line-height: 30px;
+    color: #333;
+    float: left;
+}
+.liebiao .notice li>a>span{
+    margin-right: 10px;
+}
+.liebiao .notice li>span{
+    float: right;
+}
+.jiaoshipinglun,.jiaoshijieshao{
+    width: 950px;
+    padding: 15px;
+    /*background-color: #fff;*/
+    /*display: none;*/
+
+}
+.jiaoshipinglun{
+    display: none;
+}
+.jieshao{
+    width: 980px;
+}
+.stuDiscuss .getStar{
+    background-color: transparent;
+}
+
+.liebiao .huodonggonggaoContent{
+    padding:  0 15px;
+    text-indent: 2em;
+}
+/*2.16.5.12修改教室多图展示*/
+/* 本例子css */
+.focusBox { position: absolute; width:960px;top: 50%;left:50%;
+    -webkit-transform: translateY(-50%) translateX(-50%);
+    -ms-transform: translateY(-50%) translateX(-50%);
+    -o-transform: translateY(-50%) translateX(-50%);
+    transform: translateY(-50%) translateX(-50%);
+    max-width: 1000px;
+    max-height: 85%;
+    background-color: rgba(0，0，0，0.7);
+    z-index: 99999;
+    opacity:0;
+}
+.focusBox .pic{ position:relative; z-index:0;max-height: 100%; }
+.focusBox .pic img {max-width: 1000px;
+    max-height: 600px;margin: 0 auto;  display: block;
+}
+.pic>li{
+    /*position: absolute;*/
+    top:45%!important;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+.pic li a{
+    display: inline-block;
+    position: relative;
+    /*display: block;*/
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    -o-transform: translateX(-50%);
+    transform: translateX(-50%);
+    /*background-color: #ccc;*/
+}
+.focusBox .hd { width:100%; position: absolute; bottom: 10px; text-align: center; font-size:0; z-index:1; }
+.focusBox .hd li{margin: 0 5px;vertical-align: middle; background: url(/images/dot.png) no-repeat 0 -16px; height: 16px; overflow: hidden; width: 16px; cursor: pointer;
+    display:inline-block; *display:inline; zoom:1;  _background: url(/images/dot8.png) no-repeat 0 -16px;
+}
+.focusBox .hd .on{ background-position:0 0; }
+
+.focusBox .prev,
+.focusBox .next { width: 60px; height: 90px; margin: -60px 0 0;  background: url(/images/ad_ctr.png) no-repeat 0 0; position: absolute; top: 50%; z-index: 10; cursor: pointer; text-indent: -9999px; filter:alpha(opacity=50);opacity:0.5;  }
+.focusBox .prev { left: 0; }
+.focusBox .next { background-position: 0 -90px; right: 0; }
+.focusBox .prev:hover,
+.focusBox .next:hover { filter:alpha(opacity=80) !important;opacity:0.8 !important;  }
+.jiaoshi_shows_down{
+    width: 100%;
+    height: 100%;
+    background: #000;
+    background-color: rgba(0,0,0,0.5);
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 99997;
+    opacity: 0;
+    /*display: none;*/
+}
+
+.shutUp{
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    width: 20px;
+    height: 20px;
+    border: 1px solid #f00;
+    color: #f00;
+    border-radius: 50%;
+    font-size: 16px;
+    text-align: center;
+    line-height: 20px;
+    cursor: pointer;
+    background-color: #fff;
+}
+/*多图展插件结束*/

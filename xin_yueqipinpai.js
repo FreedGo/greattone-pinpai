@@ -196,6 +196,7 @@ $(function() {
                 console.log(subCity1);
                 // 第二步，向好琴声后台发送当前地址并接受返回的信息
                 $.ajax({
+
                     url: '/jiaoshi/indexs.ip.php',
                     type: 'post',
                     dataType: 'text',
@@ -238,7 +239,8 @@ $(function() {
         $('.loaders').fadeIn(200);
         getCurrentCity();
     });
-    getCurrentCity(
+
+
 
 });
 

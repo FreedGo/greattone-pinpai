@@ -154,13 +154,13 @@ function ChangeMenuBg2(doobj,dofont){
 <!--<script type="text/javascript" src="/js/visuallightbox.js"></script>-->
 <!--<script type="text/javascript" src="/js/52img.js"></script>-->
 <script language="javascript" src="/js/language.js"></script>
-
-<script type="text/javascript">
-jQuery(document).ready(
-function(){window.Lightbox = new jQuery().visualLightbox({autoPlay:false,borderSize:12,classNames:'lightbox',closeLocation:'top',descSliding:true,enableRightClick:false,enableSlideshow:true,prefix:'vlb1',resizeSpeed:7,slideTime:4,startZoom:true});
-var a=jQuery;a("#feedlist .lightbox").mouseenter(function(){var b=a("div.vlb_zoom",this);if(!b.length){b=a('<div class="vlb_zoom" style="position:absolute">').hide().appendTo(this);a("img:first",b).detach()}b.fadeIn("fast")}).mouseleave(function(){a("div",this).fadeOut("fast")})
-});
-</script>
+<script type="text/javascript" src="/js/adress.js"></script>
+<!--<script type="text/javascript">-->
+<!--jQuery(document).ready(-->
+<!--function(){window.Lightbox = new jQuery().visualLightbox({autoPlay:false,borderSize:12,classNames:'lightbox',closeLocation:'top',descSliding:true,enableRightClick:false,enableSlideshow:true,prefix:'vlb1',resizeSpeed:7,slideTime:4,startZoom:true});-->
+<!--var a=jQuery;a("#feedlist .lightbox").mouseenter(function(){var b=a("div.vlb_zoom",this);if(!b.length){b=a('<div class="vlb_zoom" style="position:absolute">').hide().appendTo(this);a("img:first",b).detach()}b.fadeIn("fast")}).mouseleave(function(){a("div",this).fadeOut("fast")})-->
+<!--});-->
+<!--</script>-->
 </head>
 <body>
 
